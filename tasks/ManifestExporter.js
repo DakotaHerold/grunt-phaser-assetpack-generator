@@ -8,86 +8,133 @@ module.exports = function(grunt){
        
         //grunt.log.write(this.data.files.src); 
         var rawJSON = grunt.file.readJSON(this.data.files.src); 
-        var _assets = rawJSON.assets; 
+        var _packs = null; 
         var _images = null; 
         var _audio = null; 
         var _text = null; 
         var _json = null; 
         var _xml = null; 
 
-        
-        //grunt.log.write(_assets); 
+        //grunt.log.writeln(Object.keys(rawJSON)); 
 
-        // Parse json data from file into usable variables 
-        var assetIndex; 
-        for(assetIndex = 0; assetIndex < _assets.length; assetIndex++)
+        // Cache Pack Properties for later 
+        var packNameIndex; 
+        for(packNameIndex = 0; packNameIndex < Object.keys(rawJSON).length; ++packNameIndex)
         {
-            switch(_assets[assetIndex].type)
+            var packName = Object.keys(rawJSON)[packNameIndex]; 
+
+            // Cache Pack Properties for later
+            if(_packs === null)
             {
-                case 'image':
-                    if(_images === null)
-                    {
-                        _images = new Array(); 
-                        _images.push(_assets[assetIndex]); 
-                    }
-                    else 
-                    {
-                        _images.push(_assets[assetIndex]); 
-                    }
-                    
-                    break; 
-                case 'audio':
-
-                    if(_audio === null)
-                    {
-                        _audio = new Array(); 
-                        _audio.push(_assets[assetIndex]); 
-                    }
-                    else 
-                    {
-                        _audio.push(_assets[assetIndex]); 
-                    }
-                    break; 
-                case 'text':
-
-                    if(_text === null)
-                    {
-                        _text = new Array(); 
-                        _text.push(_assets[assetIndex]); 
-                    }
-                    else 
-                    {
-                        _text.push(_assets[assetIndex]); 
-                    }
-                    break; 
-                case 'json':
-
-                    if(_json === null)
-                    {
-                        _json = new Array(); 
-                        _json.push(_assets[assetIndex]); 
-                    }
-                    else 
-                    {
-                        _json.push(_assets[assetIndex]); 
-                    }
-                    break; 
-                case 'xml':
-
-                    if(_xml === null)
-                    {
-                        _xml = new Array(); 
-                        _xml.push(_assets[assetIndex]); 
-                    }
-                    else 
-                    {
-                        _xml.push(_assets[assetIndex]); 
-                    }
-                    break; 
+                _packs = new Array(); 
+                _packs.push(packName); 
+            }
+            else 
+            {
+                if(!_packs.includes(packName))
+                {
+                    _packs.push(packName); 
+                }
             }
         }
 
-        // TODO: Use Dictionary 
+
+        // Loop over all asset packs 
+        var packIndex; 
+        for(packIndex = 0; packIndex <  Object.values(rawJSON).length; packIndex++)
+        {
+            var packProperty = Object.values(rawJSON)[packIndex]; 
+
+            
+            
+            // Pack is either meta data or not formatted correctly so ignore it
+            if(typeof packProperty.files === 'undefined')
+                continue; 
+
+            //grunt.log.writeln(Object.getOwnPropertyNames(packProperty)); 
+
+            // Grab files 
+            var _assets = packProperty.files; 
+            
+            // Parse json data from file into usable variables 
+            var assetIndex; 
+            for(assetIndex = 0; assetIndex < _assets.length; assetIndex++)
+            {
+                
+                //grunt.log.write(_assets[assetIndex].type);
+ 
+                if(_assets.type === null)
+                {
+                    continue; 
+                }
+
+                switch(_assets[assetIndex].type)
+                {
+                    case 'image':
+                        if(_images === null)
+                        {
+                            _images = new Array(); 
+                            _images.push(_assets[assetIndex]); 
+                        }
+                        else 
+                        {
+                            _images.push(_assets[assetIndex]); 
+                        }
+                        
+                        break; 
+                    case 'audio':
+
+                        if(_audio === null)
+                        {
+                            _audio = new Array(); 
+                            _audio.push(_assets[assetIndex]); 
+                        }
+                        else 
+                        {
+                            _audio.push(_assets[assetIndex]); 
+                        }
+                        break; 
+                    case 'text':
+
+                        if(_text === null)
+                        {
+                            _text = new Array(); 
+                            _text.push(_assets[assetIndex]); 
+                        }
+                        else 
+                        {
+                            _text.push(_assets[assetIndex]); 
+                        }
+                        break; 
+                    case 'json':
+
+                        if(_json === null)
+                        {
+                            _json = new Array(); 
+                            _json.push(_assets[assetIndex]); 
+                        }
+                        else 
+                        {
+                            _json.push(_assets[assetIndex]); 
+                        }
+                        break; 
+                    case 'xml':
+
+                        if(_xml === null)
+                        {
+                            _xml = new Array(); 
+                            _xml.push(_assets[assetIndex]); 
+                        }
+                        else 
+                        {
+                            _xml.push(_assets[assetIndex]); 
+                        }
+                        break; 
+                }
+            }
+        }
+
+ 
 
         // Create JS file
 
@@ -208,6 +255,31 @@ module.exports = function(grunt){
         fileStr += "\n  }"; 
 
         fileStr += "\n}\n\n"; 
+
+
+        // Asset Packs 
+        fileStr += "class AssetPack {"; 
+        fileStr += "\n  constructor() {"
+
+        if(_packs === null)
+        {
+            fileStr += '\n'; 
+        }
+        else 
+        {
+            var i; 
+            for(i = 0; i < _packs.length; i++)
+            {
+                fileStr += "\n      this." + _packs[i] + " = " + " { "; 
+                fileStr += " key: " + "\"" + _packs[i] + "\"";
+                fileStr += " };"; 
+            }
+        }
+        fileStr += "\n  }"; 
+
+        fileStr += "\n}\n\n"; 
+
+        
 
         fileStr += "\n"
 

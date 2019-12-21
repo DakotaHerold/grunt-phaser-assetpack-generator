@@ -21,20 +21,86 @@ module.exports = function(grunt) {
     // and the like so that others can prepare things accordingly?
 
     var processFiles = function(files, destination, processor) {
-      var assetJson = {
-        assets: []
-      }
 
+      // First Add Asset packs to json. Filtered by directory. 
+      var assetJson = {}; 
+
+      files.forEach(function(file) {
+        // Add directories - these will be our asset packs themselves 
+        if(grunt.file.isDir(file)) {
+          var dirPath = file.toString(); 
+          var arr = dirPath.split('/');
+
+          var target = null; 
+
+          var i; 
+          for(i = 0; i < arr.length; i++)
+          {
+            if(i > 0)
+            {
+              var prev = arr[i-1].toLowerCase();
+              
+              if(prev === 'assets')
+              {
+                target = arr[i].toString(); 
+                break; 
+              }
+            }
+          }
+
+          if(target !== null)
+          {
+            // Check if pack has already been generated
+            if(!Object.keys(assetJson).includes(target))
+            {
+              var packTitle = target.toString(); 
+              var packJson = { files: [] };
+              assetJson[packTitle] = packJson; 
+              //grunt.log.writeln(target);
+            }
+            
+          } 
+          
+        }
+      }); 
+
+      // Add metadata objects pack for loading purposes 
+      assetJson['meta'] = {
+        "generated": "1401380327373",
+        "app": "Phaser 3 Asset Packer",
+        "url": "https://phaser.io",
+        "version": "1.0",
+        "copyright": "Photon Storm Ltd. 2018"
+      };
+
+
+
+      // Iterate through all files and add files to corresponding asset pack 
       files.forEach(function(file) {
         // Skip directories
         if(!grunt.file.isDir(file)) {
-          var asset = processor(file, grunt)
-          if(asset) {
-            assetJson.assets.push(asset)            
-          }
+
+          // Iterate over all pack objects
+          Object.keys(assetJson).forEach(function(key) {
+            var keyStr = key.toString(); 
+            var currentFilePath = file.toString(); 
+            // If key matches, it belongs in that pack 
+            // Note, pack directory names must not repeat in subfolders
+            if(currentFilePath.includes(keyStr))
+            {
+              var asset = processor(file, grunt)
+              if(asset) {
+                assetJson[keyStr].files.push(asset);             
+              }
+            }
+          }); 
+
+          
         }
       });
-      return assetJson
+
+
+      return assetJson;
     } // end process files
 
     // Iterate over all specified file groups.
