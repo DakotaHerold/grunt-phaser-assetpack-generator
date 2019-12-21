@@ -87,6 +87,7 @@ module.exports = function(grunt){
             }
         }
 
+        // TODO: Use Dictionary 
 
         // Create JS file
 
@@ -105,7 +106,10 @@ module.exports = function(grunt){
             var i; 
             for(i = 0; i < _images.length; i++)
             {
-                fileStr += "\n      this." + _images[i].key.toString() + " = \"" + _images[i].url.toString() + "\";";  
+                fileStr += "\n      this." + _images[i].key.toString() + " = " + " { "; 
+                fileStr += "key: " + "\"" + _images[i].key.toString() + "\",";
+                fileStr += " path: " + "\"" + _images[i].url.toString() + "\"";
+                fileStr += " };"; 
             }
         }
         fileStr += "\n  }"; 
@@ -126,7 +130,10 @@ module.exports = function(grunt){
             var i; 
             for(i = 0; i < _audio.length; i++)
             {
-                fileStr += "\n      this." + _audio[i].key.toString() + " = \"" + _audio[i].urls.toString() + "\";";  
+                fileStr += "\n      this." + _audio[i].key.toString() + " = " + " { "; 
+                fileStr += "key: " + "\"" + _audio[i].key.toString() + "\",";
+                fileStr += " path: " + "\"" + _audio[i].urls.toString() + "\"";
+                fileStr += " };";  
             }
         }
         fileStr += "\n  }"; 
@@ -146,7 +153,10 @@ module.exports = function(grunt){
             var i; 
             for(i = 0; i < _text.length; i++)
             {
-                fileStr += "\n      this." + _text[i].key.toString() + " = \"" + _text[i].urls.toString() + "\";";  
+                fileStr += "\n      this." + _text[i].key.toString() + " = " + " { "; 
+                fileStr += "key: " + "\"" + _text[i].key.toString() + "\",";
+                fileStr += " path: " + "\"" + _text[i].url.toString() + "\"";
+                fileStr += " };"; 
             }
         }
         fileStr += "\n  }"; 
@@ -166,7 +176,10 @@ module.exports = function(grunt){
             var i; 
             for(i = 0; i < _json.length; i++)
             {
-                fileStr += "\n      this." + _json[i].key.toString() + " = \"" + _json[i].urls.toString() + "\";";  
+                fileStr += "\n      this." + _json[i].key.toString() + " = " + " { "; 
+                fileStr += "key: " + "\"" + _json[i].key.toString() + "\",";
+                fileStr += " path: " + "\"" + _json[i].url.toString() + "\"";
+                fileStr += " };"; 
             }
         }
         fileStr += "\n  }"; 
@@ -186,7 +199,10 @@ module.exports = function(grunt){
             var i; 
             for(i = 0; i < _xml.length; i++)
             {
-                fileStr += "\n      this." + _xml[i].key.toString() + " = \"" + _xml[i].urls.toString() + "\";";  
+                fileStr += "\n      this." + _xml[i].key.toString() + " = " + " { "; 
+                fileStr += "key: " + "\"" + _xml[i].key.toString() + "\",";
+                fileStr += " path: " + "\"" + _xml[i].url.toString() + "\"";
+                fileStr += " };"; 
             }
         }
         fileStr += "\n  }"; 
