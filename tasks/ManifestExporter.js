@@ -179,7 +179,15 @@ module.exports = function(grunt){
             {
                 fileStr += "\n      this." + _audio[i].key.toString() + " = " + " { "; 
                 fileStr += "key: " + "\"" + _audio[i].key.toString() + "\",";
-                fileStr += " path: " + "\"" + _audio[i].urls.toString() + "\"";
+                fileStr += " paths: " + "[";
+                _audio[i].urls.forEach(function(url){
+                    fileStr += "\"" + url + "\",";
+                });
+
+                // Cut off last comma
+                fileStr = fileStr.substring(0, fileStr.length-1); 
+                
+                fileStr += "]";
                 fileStr += " };";  
             }
         }
@@ -287,6 +295,7 @@ module.exports = function(grunt){
         fileStr += "export class AssetManifest {"; 
 
         fileStr += "\n  constructor() {"
+        fileStr += "\n      this.AssetPacks = new AssetPack();"; 
         fileStr += "\n      this.Images = new Images();"; 
         fileStr += "\n      this.Audio = new Audio();"; 
         fileStr += "\n      this.Text = new Text();"; 

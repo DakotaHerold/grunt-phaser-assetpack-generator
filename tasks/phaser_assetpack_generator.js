@@ -83,14 +83,32 @@ module.exports = function(grunt) {
           // Iterate over all pack objects
           Object.keys(assetJson).forEach(function(key) {
             var keyStr = key.toString(); 
+            grunt.log.writeln(keyStr); 
+
             var currentFilePath = file.toString(); 
             // If key matches, it belongs in that pack 
-            // Note, pack directory names must not repeat in subfolders
+            // NOTE: pack directory names must not repeat in subfolders
             if(currentFilePath.includes(keyStr))
             {
               var asset = processor(file, grunt)
               if(asset) {
-                assetJson[keyStr].files.push(asset);             
+
+                // Check if file already exists 
+                var exists = false; 
+
+                assetJson[keyStr].files.forEach(function(existingFile){
+                  if(existingFile.key == asset.key)
+                  {
+                    exists = true; 
+                  }
+                });
+
+                if(exists === false)
+                {
+                  assetJson[keyStr].files.push(asset);  
+                }           
+
+
               }
             }
           }); 
