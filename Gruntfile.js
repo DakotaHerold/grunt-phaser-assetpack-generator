@@ -23,7 +23,7 @@ module.exports = function(grunt) {
         files: [
           {
             src: ['../src/assets/**', '!**/*.json'],
-            dest: '../src/AssetsManifest.json',
+            dest: '../src/Manifest/AssetManifest.json',
             processor: 'default'
           }
         ]
