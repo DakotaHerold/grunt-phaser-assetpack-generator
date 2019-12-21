@@ -103,15 +103,30 @@ var assetHandlerDefault = function(file, grunt) {
     }
 }
 
+var getKeyName = function(file)
+{
+	var fullPath = file;
+	var keyName = fullPath.replace(/^.*[\\\/]/, '');
+	var extension = file.substring(file.lastIndexOf('.') + 1);
+	extension = '.' + extension; 
+	keyName = keyName.replace(extension,'');
+	
+	return keyName; 
+}
+
 var imageHandler = function(file) {
+  var keyName = getKeyName(file); 
+	
   return {
     type: 'image',
-    key: file,
+    key: keyName,
     url: file
   }
 }
 
 var audioHandler = function(file, grunt) {
+  var keyName = getKeyName(file); 
+	
   var urls = [];
   grunt.file.recurse(file.substring(0, file.lastIndexOf('/')), function(audioFile) {
     if(isAudioFile(audioFile)) {
@@ -121,34 +136,40 @@ var audioHandler = function(file, grunt) {
   // TODO: Find a way to merge all the audio together
   return {
     type: 'audio',
-    key: file,
+    key: keyName,
     autoDecode: true,
     urls: urls
   }
 }
 
 var textHandler = function(file) {
+  var keyName = getKeyName(file); 
+  
   return {
     type: 'text',
-    key: file,
+    key: keyName,
     url: file,
     overwrite: true
   }
 }
 
 var jsonHandler = function(file) {
+  var keyName = getKeyName(file); 
+  
   return {
     type: 'json',
-    key: file,
+    key: keyName,
     url: file,
     overwrite: true
   }
 }
 
 var xmlHandler = function(file) {
+  var keyName = getKeyName(file); 
+  
   return {
     type: 'xml',
-    key: file,
+    key: keyName,
     url: file,
     overwrite: true
   }
