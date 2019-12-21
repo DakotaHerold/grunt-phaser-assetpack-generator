@@ -28,7 +28,22 @@ module.exports = function(grunt) {
           }
         ]
       }
+    }, 
+    
+    // Manifest Exporter 
+    ManifestExporter: {
+      default: {
+        files: 
+          {
+            src: '../src/Manifest/AssetManifest.json',
+            dest: '../src/Manifest/AssetManifest.js',
+            processor: 'default'
+          }
+        
+      }
     }
+
+
   });
 
   // Actually load this plugin's task(s).
@@ -41,5 +56,5 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('default', ['clean', 'phaser_assetpack_generator']);
+  grunt.registerTask('default', ['clean', 'phaser_assetpack_generator', 'ManifestExporter']);
 };
