@@ -22,8 +22,8 @@ module.exports = function(grunt) {
       default: {
         files: [
           {
-            src: ['assets/**', '!**/*.json'],
-            dest: 'tmp/assets.json',
+            src: ['../src/assets/**', '!**/*.json'],
+            dest: '../src/AssetsManifest.json',
             processor: 'default'
           }
         ]
@@ -36,6 +36,8 @@ module.exports = function(grunt) {
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-clean');
+  
+  grunt.loadNpmTasks('grunt-phaser-assetpack-generator');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
