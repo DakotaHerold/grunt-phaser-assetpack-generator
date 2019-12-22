@@ -198,6 +198,39 @@ var getKeyName = function(file)
 	return keyName; 
 }
 
+var getPackName = function(file)
+{
+  var dirPath = file.toString(); 
+  var arr = dirPath.split('/');
+
+  var target = null; 
+
+  var i; 
+  for(i = 0; i < arr.length; i++)
+  {
+    if(i > 0)
+    {
+      var prev = arr[i-1].toLowerCase();
+      
+      if(prev === 'assets')
+      {
+        target = arr[i].toString(); 
+        break; 
+      }
+    }
+  }
+
+  if(target === null)
+  {
+    return '';
+  }
+  else 
+  {
+    return target; 
+  }
+
+}
+
 var imageHandler = function(file) {
   var keyName = getKeyName(file); 
 	
@@ -210,6 +243,7 @@ var imageHandler = function(file) {
 
 var audioHandler = function(file, grunt) {
   var keyName = getKeyName(file); 
+  var packName = getPackName(file); 
 	
   var urls = [];
   grunt.file.recurse(file.substring(0, file.lastIndexOf('/')), function(audioFile) {
@@ -221,6 +255,7 @@ var audioHandler = function(file, grunt) {
   return {
     type: 'audio',
     key: keyName,
+    pack: packName, 
     autoDecode: true,
     urls: urls
   }

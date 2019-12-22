@@ -178,6 +178,7 @@ module.exports = function(grunt){
             for(i = 0; i < _audio.length; i++)
             {
                 fileStr += "\n      this." + _audio[i].key.toString() + " = " + " { "; 
+                fileStr += "pack: " + "\"" + _audio[i].pack.toString() + "\", ";
                 fileStr += "key: " + "\"" + _audio[i].key.toString() + "\",";
                 fileStr += " paths: " + "[";
                 _audio[i].urls.forEach(function(url){
