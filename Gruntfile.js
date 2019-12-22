@@ -56,11 +56,6 @@ module.exports = function(grunt) {
         }]
       }
     },
-
-    clean: {
-      force: true,
-      fnt: ['../src/assets/**']
-    },
     
     // Manifest Exporter 
     ManifestExporter: {
@@ -90,5 +85,5 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('default', 'copy', ['clean', 'phaser_assetpack_generator', 'convertFntToXml', 'clean:fnt']);//, 'ManifestExporter']);
+  grunt.registerTask('default', 'copy', ['clean', 'phaser_assetpack_generator', 'convertFntToXml', 'ManifestExporter']);
 };

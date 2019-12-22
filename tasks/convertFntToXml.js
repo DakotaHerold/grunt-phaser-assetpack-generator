@@ -17,18 +17,7 @@ module.exports = function(grunt){
                 var fileContents = grunt.file.read(prefix+file); 
                 var dest = prefix + file.replace(extension, '.xml'); 
                 grunt.file.write(dest, fileContents); 
-
-
-                
-
-
-
-                //grunt.log.writeln(this.files.cwd());
-                // grunt.file.setBase(prefix); 
-                // grunt.log.writeln(prefix+file); 
-                // var target = prefix+file; 
-                
-                //grunt.log.writeln(processor.cwd());
+                grunt.file.delete(prefix+file, {force:true});
             }); 
         }
         
