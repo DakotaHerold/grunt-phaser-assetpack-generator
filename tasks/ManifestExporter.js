@@ -14,6 +14,7 @@ module.exports = function(grunt){
         var _text = null; 
         var _json = null; 
         var _xml = null; 
+        var _fnt = null; 
 
         //grunt.log.writeln(Object.keys(rawJSON)); 
 
@@ -128,6 +129,18 @@ module.exports = function(grunt){
                         else 
                         {
                             _xml.push(_assets[assetIndex]); 
+                        }
+                        break; 
+                    case 'fnt':
+
+                        if(_fnt === null)
+                        {
+                            _fnt = new Array(); 
+                            _fnt.push(_assets[assetIndex]); 
+                        }
+                        else 
+                        {
+                            _fnt.push(_assets[assetIndex]); 
                         }
                         break; 
                 }
@@ -258,6 +271,30 @@ module.exports = function(grunt){
                 fileStr += "\n      this." + _xml[i].key.toString() + " = " + " { "; 
                 fileStr += "key: " + "\"" + _xml[i].key.toString() + "\",";
                 fileStr += " path: " + "\"" + _xml[i].url.toString() + "\"";
+                fileStr += " };"; 
+            }
+        }
+        fileStr += "\n  }"; 
+
+        fileStr += "\n}\n\n"; 
+
+        // FNT 
+        fileStr += "class Fnt {"; 
+        fileStr += "\n  constructor() {"
+
+        if(_fnt === null)
+        {
+            fileStr += '\n'; 
+        }
+        else 
+        {
+            var i; 
+            for(i = 0; i < _fnt.length; i++)
+            {
+                fileStr += "\n      this." + _fnt[i].key.toString() + " = " + " { "; 
+                fileStr += "key: " + "\"" + _fnt[i].key.toString() + "\",";
+                fileStr += " pack: " + "\"" + _fnt[i].pack + "\",";
+                fileStr += " path: " + "\"" + _fnt[i].url.toString() + "\"";
                 fileStr += " };"; 
             }
         }

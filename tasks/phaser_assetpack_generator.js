@@ -161,6 +161,14 @@ var isAudioFile = function(file) {
   return false;
 }
 
+var isImageFile = function(file) {
+  var extension = file.substring(file.lastIndexOf('.') + 1)
+  if(['png', 'jpg', 'gif'].indexOf(extension) > -1) {
+    return true;
+  }
+  return false;
+}
+
 // Each handler returns a JSON of its configuration
 var assetHandlerDefault = function(file, grunt) {
     var extension = file.substring(file.lastIndexOf('.') + 1)
@@ -180,6 +188,8 @@ var assetHandlerDefault = function(file, grunt) {
         return jsonHandler(file)
       case 'xml':
         return xmlHandler(file)
+      case 'fnt':
+        return fntHandler(file)
       case 'tmx':
         return tilemapModule.tileMapHandler(file, grunt)
       default:
@@ -294,6 +304,18 @@ var xmlHandler = function(file) {
   }
 }
 
+var fntHandler = function(file, grunt) {
+  var keyName = getKeyName(file); 
+  var packName = getPackName(file); 
+  
+  return {
+    type: 'fnt',
+    key: keyName,
+    pack: packName, 
+    url: file
+  }
+}
+
 var tmxTilesetHandler = function(file)  {
 
 }
@@ -306,6 +328,7 @@ var assetHandlerMap = {
   text: textHandler,
   json: jsonHandler,
   xml: xmlHandler,
+  fnt : fntHandler,
   tilemap: tilemapModule.tileMapHandler
 }
 
