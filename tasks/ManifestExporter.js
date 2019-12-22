@@ -278,9 +278,10 @@ module.exports = function(grunt){
             var i; 
             for(i = 0; i < _packs.length; i++)
             {
-                fileStr += "\n      this." + _packs[i] + " = " + " { "; 
-                fileStr += " key: " + "\"" + _packs[i] + "\"";
-                fileStr += " };"; 
+                fileStr += "\n      this." + _packs[i] + " = " ; 
+                fileStr += "\"" + _packs[i] + "\""
+                //fileStr += " key: " + "\"" + _packs[i] + "\"";
+                fileStr += ";"; 
             }
         }
         fileStr += "\n  }"; 
@@ -295,8 +296,8 @@ module.exports = function(grunt){
         fileStr += "export class AssetManifest {"; 
 
         fileStr += "\n  constructor() {"
-        fileStr += "\n      this.AssetPacks = new AssetPack();"; 
-        fileStr += "\n      this.Images = new Images();"; 
+        fileStr += "\n      this.AssetPack = new AssetPack();"; 
+        fileStr += "\n      this.Image = new Images();"; 
         fileStr += "\n      this.Audio = new Audio();"; 
         fileStr += "\n      this.Text = new Text();"; 
         fileStr += "\n      this.Json = new Json();"; 

@@ -83,7 +83,7 @@ module.exports = function(grunt) {
           // Iterate over all pack objects
           Object.keys(assetJson).forEach(function(key) {
             var keyStr = key.toString(); 
-            grunt.log.writeln(keyStr); 
+            //grunt.log.writeln(keyStr); 
 
             var currentFilePath = file.toString(); 
             // If key matches, it belongs in that pack 
