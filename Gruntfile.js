@@ -29,6 +29,38 @@ module.exports = function(grunt) {
         ]
       }
     }, 
+
+    // Convert all .fnt files to .xml 
+    // convertFntToXml: {
+    //   default: {
+    //     files: [
+    //       {
+    //         expand: true,
+    //         dot: true,
+    //         src: ['../src/assets/**'],
+    //         processor: 'default'
+    //       }
+    //     ]
+    //   }
+    // }, 
+
+    convertFntToXml: {
+      default:{
+        files: [{
+          expand: true,
+          src: ['../src/assets/**'],
+          processor: 'default'
+          // rename: function (dest, src) {          // The `dest` and `src` values can be passed into the function
+          //   return src.replace('.fnt','xml'); // The `src` is being renamed; the `dest` remains the same
+          // }
+        }]
+      }
+    },
+
+    clean: {
+      force: true,
+      fnt: ['../src/assets/**']
+    },
     
     // Manifest Exporter 
     ManifestExporter: {
@@ -51,10 +83,12 @@ module.exports = function(grunt) {
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-clean');
+
+  //grunt.loadNpmTasks('grunt-contrib-convertFntToXml'); 
   
-  grunt.loadNpmTasks('grunt-phaser-assetpack-generator');
+  //grunt.loadNpmTasks('grunt-phaser-assetpack-generator');
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('default', ['clean', 'phaser_assetpack_generator', 'ManifestExporter']);
+  grunt.registerTask('default', 'copy', ['clean', 'phaser_assetpack_generator', 'convertFntToXml', 'clean:fnt']);//, 'ManifestExporter']);
 };

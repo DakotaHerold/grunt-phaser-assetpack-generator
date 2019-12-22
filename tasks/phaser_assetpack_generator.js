@@ -97,10 +97,39 @@ module.exports = function(grunt) {
                 var exists = false; 
 
                 assetJson[keyStr].files.forEach(function(existingFile){
-                  if(existingFile.key == asset.key)
+
+                  // Get file extension as two files can have the same name 
+                  var extensionsMatch = false; 
+
+                  if(typeof existingFile.url !== 'undefined' && typeof asset.url !== 'undefined')
                   {
-                    exists = true; 
+                    var extensionOne = existingFile.url.substring(file.lastIndexOf('.') + 1);
+                    var extensionTwo = asset.url.substring(file.lastIndexOf('.') + 1);
+                    if(extensionOne == extensionTwo)
+                    {
+                      extensionsMatch = true; 
+                    }
                   }
+                  
+                  // Special case for audio as audio files can stack under one key
+                  if(typeof asset.type !== 'undefined')
+                  {
+                    if(asset.type === 'audio')
+                    {
+                      if(existingFile.key === asset.key)
+                      {
+                        exists = true; 
+                      }
+                    }
+                    else 
+                    {
+                      if(existingFile.key === asset.key && extensionsMatch)
+                      {
+                        exists = true; 
+                      }
+                    }
+                  }
+                  
                 });
 
                 if(exists === false)
@@ -188,7 +217,7 @@ var assetHandlerDefault = function(file, grunt) {
         return jsonHandler(file)
       case 'xml':
         return xmlHandler(file)
-      case 'fnt':
+      case 'fnt': 
         return fntHandler(file)
       case 'tmx':
         return tilemapModule.tileMapHandler(file, grunt)
@@ -295,26 +324,33 @@ var jsonHandler = function(file) {
 
 var xmlHandler = function(file) {
   var keyName = getKeyName(file); 
+  var packName = getPackName(file); 
   
   return {
     type: 'xml',
     key: keyName,
     url: file,
+    pack: packName, 
     overwrite: true
   }
 }
 
 var fntHandler = function(file, grunt) {
-  var keyName = getKeyName(file); 
-  var packName = getPackName(file); 
+
+  //var extension = file.substring(file.lastIndexOf('.') + 1);
+  //var destFilePath = file.replace(extension, '.xml'); 
   
-  return {
-    type: 'fnt',
-    key: keyName,
-    pack: packName, 
-    url: file
-  }
+  //grunt.log.writeln('test');  
+
+  //var fileContents = grunt.file.read(file.toString()); 
+
+
+  //grunt.file.write(destFilePath, fileContents); 
+  //grunt.file.delete(file); 
+  
+  //return xmlHandler(destFilePath); 
 }
+
 
 var tmxTilesetHandler = function(file)  {
 
