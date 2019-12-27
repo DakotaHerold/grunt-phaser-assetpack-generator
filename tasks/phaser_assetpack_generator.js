@@ -97,7 +97,7 @@ module.exports = function(grunt) {
                 var exists = false; 
 
                 assetJson[keyStr].files.forEach(function(existingFile){
-
+ 
                   // Get file extension as two files can have the same name 
                   var extensionsMatch = false; 
 
@@ -118,7 +118,7 @@ module.exports = function(grunt) {
                     {
                       if(existingFile.key === asset.key)
                       {
-                        exists = true; 
+                        exists = true;
                       }
                     }
                     else 
@@ -285,9 +285,15 @@ var audioHandler = function(file, grunt) {
   var packName = getPackName(file); 
 	
   var urls = [];
+
+  //grunt.log.writeln(file.substring(0, file.lastIndexOf('/'))); 
   grunt.file.recurse(file.substring(0, file.lastIndexOf('/')), function(audioFile) {
     if(isAudioFile(audioFile)) {
-      urls.push(audioFile)
+      if(keyName == getKeyName(audioFile))
+      {
+        urls.push(audioFile);
+      }
+
     }
   })
   // TODO: Find a way to merge all the audio together
