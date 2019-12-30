@@ -156,6 +156,22 @@ module.exports = function(grunt){
         // Images Class 
         fileStr += "class Image {"; 
 
+        // Generate Properties with JS Doc for VSCode Intellisense auto completion 
+        if(_images !== null)
+        {
+            fileStr += "\n  // Properties"; 
+            fileStr += "\n  /**"; 
+
+            var index; 
+            for(index = 0; index < _images.length; index++)
+            {
+                fileStr += "\n    @constant " +  _images[index].key.toString(); 
+            }
+            
+
+            fileStr += "\n  */\n"; 
+        }
+
         fileStr += "\n  constructor() {"
         if(_images === null)
         {
@@ -179,6 +195,23 @@ module.exports = function(grunt){
 
         // Audio Class
         fileStr += "class Audio {"; 
+
+        // Generate Properties with JS Doc for VSCode Intellisense auto completion 
+        if(_audio !== null)
+        {
+            fileStr += "\n  // Properties"; 
+            fileStr += "\n  /**"; 
+
+            var index; 
+            for(index = 0; index < _audio.length; index++)
+            {
+                fileStr += "\n    @constant " +  _audio[index].key.toString(); 
+            }
+            
+
+            fileStr += "\n  */\n"; 
+        }
+
         fileStr += "\n  constructor() {"
 
         if(_audio === null)
@@ -213,6 +246,22 @@ module.exports = function(grunt){
         fileStr += "class Text {"; 
         fileStr += "\n  constructor() {"
 
+        // Generate Properties with JS Doc for VSCode Intellisense auto completion 
+        if(_text !== null)
+        {
+            fileStr += "\n  // Properties"; 
+            fileStr += "\n  /**"; 
+
+            var index; 
+            for(index = 0; index < _text.length; index++)
+            {
+                fileStr += "\n    @constant " +  _text[index].key.toString(); 
+            }
+            
+
+            fileStr += "\n  */\n"; 
+        }
+
         if(_text === null)
         {
             fileStr += '\n'; 
@@ -234,6 +283,21 @@ module.exports = function(grunt){
 
         // JSON 
         fileStr += "\nclass Json {"; 
+
+        // Generate Properties with JS Doc for VSCode Intellisense auto completion 
+        if(_json !== null)
+        {
+            fileStr += "\n  // Properties"; 
+            fileStr += "\n  /**"; 
+
+            var index; 
+            for(index = 0; index < _json.length; index++)
+            {
+                fileStr += "\n    @constant " +  _json[index].key.toString(); 
+            }
+            fileStr += "\n  */\n"; 
+        }
+
         fileStr += "\n  constructor() {"
 
         if(_json === null)
@@ -257,6 +321,21 @@ module.exports = function(grunt){
 
         // XML 
         fileStr += "class Xml {"; 
+
+        // Generate Properties with JS Doc for VSCode Intellisense auto completion 
+        if(_xml !== null)
+        {
+            fileStr += "\n  // Properties"; 
+            fileStr += "\n  /**"; 
+
+            var index; 
+            for(index = 0; index < _xml.length; index++)
+            {
+                fileStr += "\n    @constant " +  _xml[index].key.toString(); 
+            }
+            fileStr += "\n  */\n"; 
+        }
+
         fileStr += "\n  constructor() {"
 
         if(_xml === null)
@@ -281,6 +360,23 @@ module.exports = function(grunt){
 
         // Asset Packs 
         fileStr += "class AssetPack {"; 
+
+        // Generate Properties with JS Doc for VSCode Intellisense auto completion 
+        if(_packs !== null)
+        {
+            fileStr += "\n  // Properties"; 
+            fileStr += "\n  /**"; 
+
+            var index; 
+            for(index = 0; index < _packs.length; index++)
+            {
+                fileStr += "\n    @constant " +  _packs[index]; 
+            }
+            
+
+            fileStr += "\n  */\n"; 
+        }
+
         fileStr += "\n  constructor() {"
 
         if(_packs === null)
@@ -289,6 +385,7 @@ module.exports = function(grunt){
         }
         else 
         {
+            // Generate Properties 
             var i; 
             for(i = 0; i < _packs.length; i++)
             {
@@ -308,6 +405,20 @@ module.exports = function(grunt){
 
         // Create Asset Manifest class 
         fileStr += "export class AssetManifest {"; 
+
+        // Generate Properties with JS Doc for VSCode Intellisense auto completion 
+        fileStr += "\n  // Properties"; 
+        fileStr += "\n  /**"; 
+
+        fileStr += "\n    @constant AssetPack"; 
+        fileStr += "\n    @constant Image"; 
+        fileStr += "\n    @constant Audio"; 
+        fileStr += "\n    @constant Text"; 
+        fileStr += "\n    @constant Json"; 
+        fileStr += "\n    @constant Xml"; 
+
+        fileStr += "\n  */\n"; 
+
 
         fileStr += "\n  constructor() {"
         fileStr += "\n      this.AssetPack = new AssetPack();"; 
