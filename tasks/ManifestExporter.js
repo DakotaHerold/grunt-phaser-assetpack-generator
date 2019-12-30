@@ -165,7 +165,11 @@ module.exports = function(grunt){
             var index; 
             for(index = 0; index < _images.length; index++)
             {
-                fileStr += "\n    @constant " +  _images[index].key.toString(); 
+                fileStr += "\n    " + _images[index].key.toString().toUpperCase() + "--------------";
+                fileStr += "\n    @property {object} " +  _images[index].key.toString(); 
+                fileStr += "\n    @property {string} " +  _images[index].key.toString()+".key";  
+                fileStr += "\n    @property {string} " +  _images[index].key.toString()+".path"; 
+                fileStr += "\n+   ----------------------------";
             }
             
 
@@ -205,7 +209,12 @@ module.exports = function(grunt){
             var index; 
             for(index = 0; index < _audio.length; index++)
             {
-                fileStr += "\n    @constant " +  _audio[index].key.toString(); 
+                fileStr += "\n    " + _audio[index].key.toString().toUpperCase() + "--------------";
+                fileStr += "\n    @property {object} " +  _audio[index].key.toString(); 
+                fileStr += "\n    @property {string} " +  _audio[index].key.toString()+".pack";  
+                fileStr += "\n    @property {string} " +  _audio[index].key.toString()+".key";  
+                fileStr += "\n    @property {string[]} " +  _audio[index].key.toString()+".paths"; 
+                fileStr += "\n+   ----------------------------";
             }
             
 
@@ -253,9 +262,13 @@ module.exports = function(grunt){
             fileStr += "\n  /**"; 
 
             var index; 
-            for(index = 0; index < _text.length; index++)
+            for(index = 0; index < _xml.length; index++)
             {
-                fileStr += "\n    @constant " +  _text[index].key.toString(); 
+                fileStr += "\n    " + _text[index].key.toString().toUpperCase() + "--------------";
+                fileStr += "\n    @property {object} " +  _text[index].key.toString(); 
+                fileStr += "\n    @property {string} " +  _text[index].key.toString()+".key";  
+                fileStr += "\n    @property {string} " +  _text[index].key.toString()+".path"; 
+                fileStr += "\n+   ----------------------------";
             }
             
 
@@ -293,7 +306,11 @@ module.exports = function(grunt){
             var index; 
             for(index = 0; index < _json.length; index++)
             {
-                fileStr += "\n    @constant " +  _json[index].key.toString(); 
+                fileStr += "\n    " + _json[index].key.toString().toUpperCase() + "--------------";
+                fileStr += "\n    @property {object} " +  _json[index].key.toString(); 
+                fileStr += "\n    @property {string} " +  _json[index].key.toString()+".key";  
+                fileStr += "\n    @property {string} " +  _json[index].key.toString()+".path"; 
+                fileStr += "\n+   ----------------------------";
             }
             fileStr += "\n  */\n"; 
         }
@@ -331,7 +348,12 @@ module.exports = function(grunt){
             var index; 
             for(index = 0; index < _xml.length; index++)
             {
-                fileStr += "\n    @constant " +  _xml[index].key.toString(); 
+                fileStr += "\n    " + _xml[index].key.toString().toUpperCase() + "--------------";
+                fileStr += "\n    @property {object} " +  _xml[index].key.toString(); 
+                fileStr += "\n    @property {string} " +  _xml[index].key.toString()+".key"; 
+                fileStr += "\n    @property {string} " +  _xml[index].key.toString()+".pack"; 
+                fileStr += "\n    @property {string} " +  _xml[index].key.toString()+".path"; 
+                fileStr += "\n+   ----------------------------";
             }
             fileStr += "\n  */\n"; 
         }
@@ -370,7 +392,7 @@ module.exports = function(grunt){
             var index; 
             for(index = 0; index < _packs.length; index++)
             {
-                fileStr += "\n    @constant " +  _packs[index]; 
+                fileStr += "\n    @property {string} " +  _packs[index]; 
             }
             
 
@@ -410,12 +432,12 @@ module.exports = function(grunt){
         fileStr += "\n  // Properties"; 
         fileStr += "\n  /**"; 
 
-        fileStr += "\n    @constant AssetPack"; 
-        fileStr += "\n    @constant Image"; 
-        fileStr += "\n    @constant Audio"; 
-        fileStr += "\n    @constant Text"; 
-        fileStr += "\n    @constant Json"; 
-        fileStr += "\n    @constant Xml"; 
+        fileStr += "\n    @property {AssetPack} AssetPack"; 
+        fileStr += "\n    @property {Image} Image"; 
+        fileStr += "\n    @property {Audio} Audio"; 
+        fileStr += "\n    @property {Text} Text"; 
+        fileStr += "\n    @property {Json} Json"; 
+        fileStr += "\n    @property {Xml} Xml"; 
 
         fileStr += "\n  */\n"; 
 
